@@ -29,6 +29,7 @@ def build_cube_lines(points):
     return x_list, y_list, z_list
 
 #funcao que faz o processo de cisalhamento no cubo
+#nesse caso cria-se uma matriz 3x3
 def cube_shearing(points, k, axs="x"):
 
     matrix = np.eye(3)
