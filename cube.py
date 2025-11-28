@@ -1,3 +1,4 @@
+#bibliotecas usadas
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import RadioButtons, Slider
@@ -35,11 +36,11 @@ def cube_shearing(points, k, axs="x"):
     matrix = np.eye(3)
 
     if axs == "x":
-        matrix[0, 1] = k
+        matrix[0, 1] = k #afeta x em funcao de y
     elif axs == "y":
-        matrix[1, 0] = k
+        matrix[1, 0] = k #afeta y em funcao de z
     elif axs == "z":
-        matrix[2, 0] = k
+        matrix[2, 0] = k #afeta z em funcao de x
 
     return matrix @ points
 
@@ -47,17 +48,21 @@ def cube_shearing(points, k, axs="x"):
 def create_window():
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection='3d')
+
     #define o nome que aparece na janela
     manager = fig.canvas.manager
     manager.set_window_title("Transformações Lineares 3D")
+
     plt.subplots_adjust(bottom=0.35)
     plt.title("Transformações Lineares 3D")
     
+    #define os limites do grafico
     limit = 4
     ax.set_xlim(-limit, limit)
     ax.set_ylim(-limit, limit)
     ax.set_zlim(-limit, limit)
     
+    #nome dos eixos
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
@@ -84,11 +89,13 @@ def update_line_data(line, x, y, z):
 
 #cria os controles do matplotlib para a selecao dos eixos e do valor de k
 def create_controls():
+    #slider para o valor de cisalhamento k
     ax_slider = plt.axes([0.2, 0.2, 0.65, 0.03])
     slider_k = Slider(
         ax_slider, "Fator de Cisalhamento K", 0.0, 2.0, valinit=0.0, valstep=0.1
     )
     
+    #botoes de selecao do eixo
     ax_radio = plt.axes([0.2, 0.05, 0.3, 0.10])
     radio = RadioButtons(ax_radio, ("X", "Y", "Z"))
     
@@ -100,9 +107,10 @@ if __name__ == "__main__":
     slider_k, radio = create_controls()        
 
     def update(val):
-        k = slider_k.val
-        option = radio.value_selected
+        k = slider_k.val #pega valor do slider
+        option = radio.value_selected #eixo selecionado
         axs = option.lower()
+
         new_vertices = cube_shearing(cube_vertices, k, axs)
         nx, ny, nz = build_cube_lines(new_vertices)
         update_line_data(line, nx, ny, nz)
@@ -111,4 +119,5 @@ if __name__ == "__main__":
     slider_k.on_changed(update)
     radio.on_clicked(update)
 
+    #exibe a interface grafica
     plt.show()

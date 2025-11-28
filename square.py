@@ -1,7 +1,7 @@
+#bibliotecas usadas
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import RadioButtons, Slider
-
 
 #definicao dos vertices do quadrado
 square_vertices = np.array([[0, 0], [2, 0], [2, 2], [0, 2], [0, 0]]).T
@@ -9,12 +9,12 @@ square_vertices = np.array([[0, 0], [2, 0], [2, 2], [0, 2], [0, 0]]).T
 #funcao que faz o processo de cisalhamento
 #criacao da matriz identidade 2x2 e realizacao da operacao nos eixos x e y
 def square_shearing(points, k, axs="x"):
-    matrix = np.eye(2)
+    matrix = np.eye(2) #matriz 2x2
 
     if axs == "x":
-        matrix[0, 1] = k
+        matrix[0, 1] = k #cisalhamento no eixo x
     else:
-        matrix[1, 0] = k
+        matrix[1, 0] = k #cisalhamento no eixo y
 
     return matrix @ points
 
@@ -24,11 +24,13 @@ def create_window():
     
     ##define o nome que aparece na janela
     manager = fig.canvas.manager
-    manager.set_window_title("Transformações Lineares 2D")
+    manager.set_window_title("Transformações Lineares 2D") 
+
     plt.subplots_adjust(bottom=0.5, left=0.3)
     plt.title("Transformações Lineares 2D")
     plt.grid(True, linestyle="--", alpha=0.3)
 
+    #define limites do plano cartesiano e mantem a proporcao igual
     ax.set_xlim(-3, 7)
     ax.set_ylim(-3, 7)
     ax.set_aspect("equal")
@@ -45,10 +47,13 @@ def initial_plot(ax, points):
 
 #cria os controles do matplotlib para a selecao dos eixos e do valor de k
 def create_controls():
+    #slider para definir o valor de k
     ax_k = plt.axes([0.2, 0.2, 0.65, 0.03])
     slider_k = Slider(
         ax_k, "Fator de transformação K", 0.0, 2.0, valinit=0.0, valstep=0.1
     )
+
+    #botoes para selecao do eixo
     ax_radio = plt.axes([0.2, 0.05, 0.3, 0.10])
     radio = RadioButtons(ax_radio, ("X", "Y"))
 
@@ -74,4 +79,5 @@ if __name__ == "__main__":
     slider_k.on_changed(update)
     radio.on_clicked(update)
 
+    #exibe a interface grafica
     plt.show()
