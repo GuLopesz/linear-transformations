@@ -47,6 +47,9 @@ def cube_shearing(points, k, axs="x"):
 def create_window():
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection='3d')
+    #define o nome que aparece na janela
+    manager = fig.canvas.manager
+    manager.set_window_title("Transformações Lineares 3D")
     plt.subplots_adjust(bottom=0.35)
     plt.title("Transformações Lineares 3D")
     
@@ -90,8 +93,6 @@ def create_controls():
     radio = RadioButtons(ax_radio, ("X", "Y", "Z"))
     
     return slider_k, radio
-
-
 
 if __name__ == "__main__":
     fig, ax = create_window()              

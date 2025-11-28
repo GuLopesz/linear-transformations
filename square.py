@@ -21,6 +21,10 @@ def square_shearing(points, k, axs="x"):
 #cria a janela do matplotlib
 def create_window():
     fig, ax = plt.subplots(figsize=(10, 8))
+    
+    ##define o nome que aparece na janela
+    manager = fig.canvas.manager
+    manager.set_window_title("Transformações Lineares 2D")
     plt.subplots_adjust(bottom=0.5, left=0.3)
     plt.title("Transformações Lineares 2D")
     plt.grid(True, linestyle="--", alpha=0.3)
